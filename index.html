@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Craft - Mix Elements and Create New Ones!</title>
+  <meta name="description" content="Craft allows you to mix Earth, Air, Fire, and Water to create new elements!">
+  <link rel="icon" href="https://i.imgur.com/zy55mJp.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="inventory" class="inventory">
+  </div>
+  <div class="crafting-container">
+    <div id="item1" class="crafting-slot" draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)">Drag Item
+      1 Here</div>
+    <div id="item2" class="crafting-slot" draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)">Drag Item
+      2 Here</div>
+    <button id="craftButton">Create</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
