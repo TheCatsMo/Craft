@@ -34,14 +34,29 @@ function addToInventory(item) {
     inventory.push(item);
     renderInventory();
 }
+// Function to sort inventory alphabetically
+function sortInventory() {
+    inventory.sort();
+}
+
+// Function to render inventory with draggable items
 function renderInventory() {
     const inventoryContainer = document.getElementById("inventory");
-    inventoryContainer.innerHTML = ""; 
+    inventoryContainer.innerHTML = ""; // Clear previous inventory
+
+    // Sort inventory alphabetically
+    sortInventory();
 
     inventory.forEach((item, index) => {
         const itemElement = document.createElement("div");
         itemElement.textContent = item;
+        itemElement.classList.add("draggable"); // Add draggable class
 
+        // Add indicator for newly created items
+        if (newlyCreatedItems.includes(item)) {
+            itemElement.classList.add("newly-created");
+        }
+        
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", () => deleteItem(index));
