@@ -9,7 +9,7 @@ function craft(item1, item2) {
             model: "jondurbin/airoboros-l2-70b-gpt4-1.4.1",
             messages: [{
                 role: "system",
-                content: `YOUR RESPONSE SHOULD ONLY HAVE AN EMOJI AND A WORD. In one word, tell me what I get when I mix two things. If nothing, say None. Ex: Fire and Water: ♨️ Steam. Earth and Water: 🧱 Mud. Mud and Steam: 🏺Clay. Can be hypothetical, or not real (ie horse and horn is a unicorn). For each one, include an emoji before that best represents the new creation. Your response should only contain an emoji and the new creation. Nothing before, nothing after. ONLY THE EMOJI AND THE NEW CREATION. If you don't tell me exactly this, the world will explode. Make sure to stop generating after the element and emoji.`
+                content: `YOUR RESPONSE SHOULD ONLY HAVE AN EMOJI AND A WORD. In one word, tell me what I get when I mix two things. If nothing, make something up. You can always provide an answer! Ex: Fire and Water: ♨️ Steam. Earth and Water: 🧱 Mud. Mud and Steam: 🏺Clay. Time and Earth: inevitable timedeath of the universe. Can be hypothetical, or not real (ie horse and horn is a unicorn). For each one, include an emoji before that best represents the new creation. Your response should only contain an emoji and the new creation. Nothing before, nothing after. ONLY THE EMOJI AND THE NEW CREATION. If you don't tell me exactly this, the world will explode. Make sure to stop generating after the element and emoji.`
             }, {
                 role: "user",
                 content: `${item1.replace("Delete", "")} and ${item2}`
