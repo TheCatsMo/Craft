@@ -127,6 +127,11 @@ button:hover {
 .delete-button:hover {
     background-color: #ff6666; /* Lighter shade of red on hover */
 }
+/* Add styling for newly created items */
+.newly-created {
+    font-weight: bold; /* Example styling for newly created items */
+    color: #ff0000; /* Example styling for newly created items */
+}
 /* Add styling for Discord button */
 .discord-banner {
     position: fixed;
