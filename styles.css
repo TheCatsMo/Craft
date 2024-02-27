@@ -46,6 +46,7 @@ body {
     left: 0;
     top: 0;
     padding: 20px;
+    padding-bottom: 60px; /* Adjust as needed based on the height of the banner */
     overflow-y: auto; /* add scrollbar if content overflows */
 }
 
@@ -125,9 +126,6 @@ button:hover {
 
 .delete-button:hover {
     background-color: #ff6666; /* Lighter shade of red on hover */
-}
-.crafting-container {
-    padding-bottom: 100px; /* Adjust as needed based on the height of the banner */
 }
 /* Add styling for Discord button */
 .discord-banner {
