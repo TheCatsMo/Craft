@@ -126,3 +126,35 @@ button:hover {
 .delete-button:hover {
     background-color: #ff6666; /* Lighter shade of red on hover */
 }
+/* Add styling for Discord button */
+.discord-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #691fad; /* Discord theme color */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.discord-button {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.discord-button a {
+    display: inline-block;
+    padding: 10px;
+    background-color: #691fad; /* Discord theme color */
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.discord-button a:hover {
+    background-color: #5b1d96; /* Darker Discord theme color on hover */
+}
