@@ -88,6 +88,7 @@ function addToInventory(item) {
     inventory.push(item);
     renderInventory();
     saveInventoryToCookies(); 
+    alert(item + " Formed")
 }
 
 function deleteItem(index) {
@@ -97,9 +98,11 @@ function deleteItem(index) {
 }
 
 document.getElementById("craftButton").addEventListener("click", () => {
+    document.getElementById("craftButton").innerText = "Crafting...";
     const item1 = document.getElementById("item1").innerText;
     const item2 = document.getElementById("item2").innerText;
     craft(item1, item2);
+    document.getElementById("craftButton").innerText = "Craft";
 });
 
 function dragStart(event) {
