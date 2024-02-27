@@ -36,7 +36,7 @@ function addToInventory(item) {
 }
 // Function to sort inventory alphabetically
 function sortInventory() {
-    inventory.sort();
+    inventory.sort((a, b) => a.localeCompare(b));
 }
 
 // Function to render inventory with draggable items
