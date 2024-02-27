@@ -1,0 +1,128 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #363042; /* dark-grey-purple background */
+    color: #fff; /* white text */
+}
+/* Add styling for mobile message */
+.mobile-message {
+    background-color: #ff0000; /* Red background color */
+    color: #fff; /* White text color */
+    text-align: center;
+    padding: 10px;
+    display: none; /* Initially hide the message */
+}
+
+/* Media query to hide inventory and crafting container on smaller screens */
+@media only screen and (max-width: 767px) {
+    #craftButton {
+        display: none;
+    }
+    .crafting-slot,
+    .inventory,
+    .crafting-container {
+        display: none; /* Hide these elements on smaller screens */
+    }
+}
+
+/* Media query to display the message only on smaller screens */
+@media only screen and (max-width: 767px) {
+    .mobile-message {
+        display: block; /* Show the message on smaller screens */
+    }
+}
+/* Style for inventory */
+.inventory {
+    width: 20%; /* take up 20% of the screen horizontally */
+    height: 100vh; /* take up 100% of the screen vertically */
+    position: fixed; /* stay fixed on the left side */
+    left: 0;
+    top: 0;
+    padding: 20px;
+    overflow-y: auto; /* add scrollbar if content overflows */
+}
+
+.inventory div {
+    margin-bottom: 10px;
+}
+
+/* Style for crafting container */
+.crafting-container {
+    width: 80%; /* take up 80% of the screen horizontally */
+    height: 100vh; /* take up 100% of the screen vertically */
+    position: fixed; /* stay fixed on the right side */
+    right: 0;
+    top: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style for crafting slots */
+.crafting-slot {
+    width: 200px;
+    height: 100px;
+    border: 2px dashed #fff;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 100px;
+    cursor: pointer;
+}
+
+/* Button styles */
+button {
+    padding: 10px 20px;
+    background-color: #8a2be2; /* purple */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #a14dc2; /* purple with glow on hover */
+}
+/* Add styling for draggable inventory items */
+/* Add styling for draggable inventory items */
+.inventory div.draggable {
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #fff; /* Add divider between elements */
+}
+
+/* Add styling for dragging effect */
+.inventory div.dragging {
+    opacity: 0.5;
+}
+
+/* Add hover effect for dropping area */
+.crafting-slot.dragover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Style delete button */
+.delete-button {
+    background-color: #ff4d4d; /* Red color */
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #ff6666; /* Lighter shade of red on hover */
+}
