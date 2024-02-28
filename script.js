@@ -42,6 +42,30 @@ function filterInventory() {
         }
     });
 }
+// Function to handle scroll event
+function handleScroll() {
+    const searchInput = document.getElementById("searchInput");
+    const inventory = document.getElementById("inventory");
+    const inventoryTop = inventory.getBoundingClientRect().top;
+
+    if (window.scrollY >= inventoryTop) {
+        searchInput.style.display = "none";
+    } else {
+        searchInput.style.display = "block";
+    }
+}
+
+// Event listener for scroll event
+window.addEventListener("scroll", handleScroll);
+
+// Function to enable typing in the search box
+function enableTyping() {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.disabled = false;
+}
+
+// Event listener for focus event on search input
+document.getElementById("searchInput").addEventListener("focus", enableTyping);
 
 // Event listener for search input
 document.getElementById("searchInput").addEventListener("input", filterInventory);
