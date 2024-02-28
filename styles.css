@@ -11,6 +11,7 @@ body {
     background-color: #363042; /* dark-grey-purple background */
     color: #fff; /* white text */
 }
+
 /* Add styling for mobile message */
 .mobile-message {
     background-color: #ff0000; /* Red background color */
@@ -38,15 +39,15 @@ body {
         display: block; /* Show the message on smaller screens */
     }
 }
+
 /* Style for inventory */
 .inventory {
     width: 20%; /* take up 20% of the screen horizontally */
-    height: 100vh; /* take up 100% of the screen vertically */
+    height: calc(100vh - 80px); /* take up 100% of the screen vertically minus space for Discord banner and padding */
     position: fixed; /* stay fixed on the left side */
     left: 0;
     top: 0;
     padding: 20px;
-    padding-bottom: 60px; /* Adjust as needed based on the height of the banner */
     overflow-y: auto; /* add scrollbar if content overflows */
 }
 
@@ -57,7 +58,7 @@ body {
 /* Style for crafting container */
 .crafting-container {
     width: 80%; /* take up 80% of the screen horizontally */
-    height: 100vh; /* take up 100% of the screen vertically */
+    height: calc(100vh - 80px); /* take up 100% of the screen vertically minus space for Discord banner and padding */
     position: fixed; /* stay fixed on the right side */
     right: 0;
     top: 0;
@@ -70,12 +71,12 @@ body {
 
 /* Style for crafting slots */
 .crafting-slot {
-    width: 200px;
-    height: 100px;
+    width: 300px; /* Larger width for crafting slots */
+    height: 150px; /* Larger height for crafting slots */
     border: 2px dashed #fff;
     margin-bottom: 20px;
     text-align: center;
-    line-height: 100px;
+    line-height: 150px;
     cursor: pointer;
 }
 
@@ -93,7 +94,7 @@ button {
 button:hover {
     background-color: #a14dc2; /* purple with glow on hover */
 }
-/* Add styling for draggable inventory items */
+
 /* Add styling for draggable inventory items */
 .inventory div.draggable {
     cursor: grab;
@@ -127,11 +128,16 @@ button:hover {
 .delete-button:hover {
     background-color: #ff6666; /* Lighter shade of red on hover */
 }
+
 /* Add styling for newly created items */
-.newly-created {
-    font-weight: bold; /* Example styling for newly created items */
-    color: #ff0000; /* Example styling for newly created items */
+.new-item-indicator {
+    background-color: #ffa500; /* Orange color for indicator */
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
+
 /* Add styling for Discord button */
 .discord-banner {
     position: fixed;
