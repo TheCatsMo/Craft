@@ -29,7 +29,22 @@ function craft(item1, item2) {
     })
     .catch(error => console.error("Error:", error));
 }
+function filterInventory() {
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const inventoryItems = document.querySelectorAll(".inventory > div");
 
+    inventoryItems.forEach(item => {
+        const itemName = item.textContent.toLowerCase();
+        if (itemName.includes(searchInput)) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+    });
+}
+
+// Event listener for search input
+document.getElementById("searchInput").addEventListener("input", filterInventory);
 function addToInventory(item) {
     inventory.push(item);
     renderInventory();
