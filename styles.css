@@ -50,6 +50,7 @@ body {
     background-color: #48405b; /* Darker background color */
     color: #fff;
     z-index: 1; /* Ensure the search input appears above other elements */
+    position: fixed;
 }
 
 #searchInput::placeholder {
