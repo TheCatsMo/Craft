@@ -40,7 +40,22 @@ body {
     }
 }
 
-/* Style for inventory */
+/* Add styling for search input */
+#searchInput {
+    width: calc(20% - 40px); /* Adjust width based on inventory width and padding */
+    padding: 10px;
+    margin: 20px 20px 0; /* Adjust top margin based on spacing preference */
+    border: none;
+    border-radius: 5px;
+    background-color: #48405b; /* Darker background color */
+    color: #fff;
+}
+
+#searchInput::placeholder {
+    color: #bfbfbf; /* Lighter placeholder color */
+}
+
+/* Add styling for inventory */
 .inventory {
     width: 20%; /* take up 20% of the screen horizontally */
     height: calc(100vh - 80px); /* take up 100% of the screen vertically minus space for Discord banner and padding */
@@ -48,6 +63,7 @@ body {
     left: 0;
     top: 0;
     padding: 20px;
+    padding-bottom: 60px; /* Adjust as needed based on the height of the banner */
     overflow-y: auto; /* add scrollbar if content overflows */
 }
 
