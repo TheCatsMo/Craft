@@ -131,7 +131,7 @@ button:hover {
 
 /* Add styling for newly created items */
 .new-item-indicator {
-    background-color: #ffa500; /* Orange color for indicator */
+    background-color: #363042; /* Orange color for indicator */
     color: #fff;
     padding: 10px;
     border-radius: 5px;
