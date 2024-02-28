@@ -40,22 +40,20 @@ function sortInventory() {
 }
 
 // Function to render inventory with draggable items
+// Function to render inventory with draggable items sorted alphabetically
 function renderInventory() {
     const inventoryContainer = document.getElementById("inventory");
     inventoryContainer.innerHTML = ""; // Clear previous inventory
 
-    // Sort inventory alphabetically
-    sortInventory();
+    // Sort inventory alphabetically based on the first character of element name
+    inventory.sort((a, b) => a.charAt(0).localeCompare(b.charAt(0)));
 
     inventory.forEach((item, index) => {
         const itemElement = document.createElement("div");
         itemElement.textContent = item;
         itemElement.classList.add("draggable"); // Add draggable class
-
-        // Add indicator for newly created items
-        if (newlyCreatedItems.includes(item)) {
-            itemElement.classList.add("newly-created");
-        }
+        itemElement.setAttribute("draggable", "true");
+        itemElement.addEventListener("dragstart", dragStart);
         
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
@@ -66,6 +64,24 @@ function renderInventory() {
     });
 }
 
+// Function to create a new item with an indicator
+function createNew(item) {
+    const craftingContainer = document.querySelector(".crafting-container");
+    const newIndicator = document.createElement("div");
+    newIndicator.textContent = `Created: ${item}`;
+    craftingContainer.insertBefore(newIndicator, craftingContainer.firstChild);
+    setTimeout(() => {
+        craftingContainer.removeChild(newIndicator);
+    }, 3000); // Remove the indicator after 3 seconds
+}
+
+// Function to add item to inventory
+function addToInventory(item) {
+    inventory.push(item);
+    renderInventory();
+    saveInventoryToCookies(); // Save inventory to cookies
+    createNew(item); // Add indicator for newly created item
+}
 function saveInventoryToCookies() {
     document.cookie = "inventory=" + JSON.stringify(inventory) + "; expires=" + new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
 }
@@ -84,12 +100,6 @@ function loadInventoryFromCookies() {
 
 window.addEventListener('load', loadInventoryFromCookies);
 
-function addToInventory(item) {
-    inventory.push(item);
-    renderInventory();
-    saveInventoryToCookies(); 
-    alert(item + " Formed")
-}
 
 function deleteItem(index) {
     inventory.splice(index, 1);
