@@ -61,7 +61,7 @@ window.addEventListener("scroll", handleScroll);
 // Function to enable typing in the search box
 function enableTyping() {
     const searchInput = document.getElementById("searchInput");
-    searchInput.disabled = false;
+    searchInput.removeAttribute("disabled");
 }
 
 // Event listener for focus event on search input
