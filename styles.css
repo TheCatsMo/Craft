@@ -69,7 +69,8 @@ body {
     padding-bottom: 60px; /* Adjust as needed based on the height of the banner */
     overflow-y: auto; /* add scrollbar if content overflows */
     z-index: 0; /* Ensure the inventory is behind the search input */
-    position: relative; /* Ensure relative positioning for absolute elements */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Style for inventory items */
@@ -77,6 +78,8 @@ body {
     position: relative; /* Ensure relative positioning for absolute elements */
     margin-bottom: 10px;
     padding-right: 30px; /* Adjust as needed based on the width of the delete button */
+    display: flex;
+    align-items: center;
 }
 
 /* Style for delete button */
@@ -91,7 +94,6 @@ body {
     top: 0;
     right: 0;
 }
-
 
 /* Style for crafting container */
 .crafting-container {
@@ -154,15 +156,7 @@ button:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Style delete button */
-.delete-button {
-    background-color: #ff4d4d; /* Red color */
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
 
 .delete-button:hover {
     background-color: #ff6666; /* Lighter shade of red on hover */
