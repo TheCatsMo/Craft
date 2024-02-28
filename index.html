@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Craft - Mix Elements and Create New Ones!</title>
-  <meta name="description" content="Craft allows you to mix Earth, Air, Fire, and Water to create new elements!">
-  <link rel="icon" href="https://i.imgur.com/zy55mJp.png" type="image/png">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Craft - Mix Elements and Create New Ones!</title>
+    <meta name="description" content="Craft allows you to mix Earth, Air, Fire, and Water to create new elements!">
+    <!-- Use URL for PNG favicon -->
+    <link rel="icon" href="https://example.com/path/to/favicon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div id="mobileMessage" class="mobile-message">Craft does not work on mobile devices. Please use a desktop or laptop
-    computer.</div>
-  <div id="inventory" class="inventory">
-    <!-- Inventory items will be dynamically added here -->
-  </div>
-  <div class="crafting-container">
-    <div id="item1" class="crafting-slot" draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)">Drag Item
-      1 Here</div>
-    <div id="item2" class="crafting-slot" draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)">Drag Item
-      2 Here</div>
-    <button id="craftButton">Create</button>
-  </div>
+    <div id="mobileMessage" class="mobile-message">Craft does not work on mobile devices. Please use a desktop or laptop computer.</div>
+    <div id="inventory" class="inventory">
+        <!-- Inventory items will be dynamically added here -->
+    </div>
+    <div class="crafting-container">
+        <div id="item1" class="crafting-slot" draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)">Drag Item 1 Here</div>
+        <div id="item2" class="crafting-slot" draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)">Drag Item 2 Here</div>
+        <button id="craftButton">Create</button>
+        <div id="newItemIndicator" class="new-item-indicator"></div>
+    </div>
   <div class="discord-banner">
     <div class="discord-button">
       <a href="https://discord.gg/GtvNt6yZeJ" target="_blank">Join Discord Server</a>
