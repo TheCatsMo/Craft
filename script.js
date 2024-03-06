@@ -1,51 +1,58 @@
-// Function to perform fuzzy search for emoji
 let inventory = ["🌎 Earth", "💨 Air", "🔥 Fire", "💧 Water"];
-const Fuse = require('fuse.js'); // Importing fuse.js library
-const fs = require('fs'); // Importing file system module
-
-// Function to perform fuzzy search for emoji
-function fuzzySearchEmoji(text) {
-  const emojisData = fs.readFileSync('emojis.txt', 'utf-8'); // Read emojis data from file
-  const emojis = emojisData.split('\n').map(line => line.split('\t')[0].trim()); // Extract emojis
-  const fuse = new Fuse(emojis); // Initialize fuse.js with emojis data
-  const result = fuse.search(text); // Perform fuzzy search
-  return result.length > 0 ? result[0].item : null; // Return best match emoji
-}
-
-// Function to perform the crafting process
 function craft(item1, item2) {
-  fetch("https://api.deepinfra.com/v1/openai/chat/completions", {
-      method: "POST",
-      headers: {
+  fetch("emojis.txt") // Assuming emojis.txt is in the same directory containing emoji data
+    .then(response => response.text())
+    .then(text => {
+        const emojis = text.split('\n').map(line => {
+        const parts = line.split('\t');
+        return { name: parts[1].trim(), char: parts[0].trim() };
+      });
+
+        // Initialize Fuse.js instance with emoji data
+      const fuse = new Fuse(emojis, { keys: ["name"], threshold: 0.4 });
+
+      const item2Emoji = fuzzySearchEmoji(item2, fuse);
+      if (!item2Emoji) {
+        console.log("Emoji not found for:", item2);
+        return;
+      }
+
+      fetch("https://api.deepinfra.com/v1/openai/chat/completions", {
+        method: "POST",
+        headers: {
           "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
+        },
+        body: JSON.stringify({
           model: "jondurbin/airoboros-l2-70b-gpt4-1.4.1",
           messages: [{
-              role: "system",
-              content: `YOUR RESPONSE SHOULD ONLY HAVE A WORD. In one word, tell me what I get when I mix two things. If nothing, make something up. It can be crazy or unhinged. You can always provide an answer! Ex: Fire and Water: Steam. Earth and Water: Mud. Mud and Steam: Clay. Time and Earth: inevitable timedeath of the universe. Can be hypothetical, or not real (ie horse and horn is a unicorn). Your response should only contain the new creation. Nothing before, nothing after. If you don't tell me exactly this, the world will explode. Make sure to stop generating after the element and emoji.`
+            role: "system",
+            content: `YOUR RESPONSE SHOULD ONLY HAVE A WORD. In one word, tell me what I get when I mix two things. If nothing, make something up. It can be crazy or unhinged. You can always provide an answer! Ex: Fire and Water: Steam. Earth and Water: Mud. Mud and Steam: Clay. Time and Earth: inevitable timedeath of the universe. Can be hypothetical, or not real (ie horse and horn is a unicorn). Your response should only contain the new creation. Nothing before, nothing after. If you don't tell me exactly this, the world will explode. Make sure to stop generating after the element and emoji.`
           }, {
-              role: "user",
-              content: `${item1.replace("Delete", "")} and ${item2}`
+            role: "user",
+            content: `${item1.replace("Delete", "")} and ${item2}`
           }]
+        })
       })
-  })
-  .then(response => response.json())
-  .then(data => {
-      let newCreation = "";
-      if (data.choices[0].message.content.includes("\n")){
-        newCreation = data.choices[0].message.content.split("\n")[0].trim();
-      } else {
-        newCreation = data.choices[0].message.content.trim();
-      }
-      
-      // Perform fuzzy search for emoji
-      const emoji = fuzzySearchEmoji(newCreation);
-      
-      // Add the new creation to the inventory
-      addToInventory(newCreation, emoji);
-  })
-  .catch(error => console.error("Error:", error));
+      .then(response => response.json())
+      .then(data => {
+        var newCreation = "";]
+        if (data.choices[0].message.content.includes("\n")){
+          newCreation = data.choices[0].message.content.split("\n")[0].trim();
+        } else {
+          newCreation = data.choices[0].message.content.trim();
+        }
+
+        addToInventory(newCreation + ' ' + item2Emoji);
+      })
+      .catch(error => console.error("Error:", error));
+    })
+    .catch(error => console.error("Error fetching emoji data:", error));
+}
+
+    // Function to perform fuzzy search for emoji
+function fuzzySearchEmoji(text, fuse) {
+    const result = fuse.search(text);
+    return result.length > 0 ? result[0].item.char : null;
 }
 function filterInventory() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
