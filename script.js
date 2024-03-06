@@ -1,4 +1,5 @@
 // Function to perform fuzzy search for emoji
+let inventory = ["🌎 Earth", "💨 Air", "🔥 Fire", "💧 Water"];
 async function fuzzySearchEmoji(text) {
   const emojiList = await getAllEmojis(); // Fetch emoji list
   
@@ -101,7 +102,6 @@ function craft(item1, item2) {
 function filterInventory() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const inventoryItems = document.querySelectorAll(".inventory > div");
-
     inventoryItems.forEach(item => {
         const itemName = item.textContent.toLowerCase();
         if (itemName.includes(searchInput)) {
