@@ -35,7 +35,7 @@ function craft(item1, item2) {
       })
       .then(response => response.json())
       .then(data => {
-        var newCreation = "";]
+        var newCreation = "";
         if (data.choices[0].message.content.includes("\n")){
           newCreation = data.choices[0].message.content.split("\n")[0].trim();
         } else {
