@@ -10,6 +10,9 @@ function craft(item1, item2) {
 
         // Initialize Fuse.js instance with emoji data
       const fuse = new Fuse(emojis, { keys: ["name"], threshold: 0.4 });
+      function unicodeToEmoji(unicode) {
+        return String.fromCodePoint(parseInt(unicode, 16));
+      }
 
       const item2Emoji = fuzzySearchEmoji(item2, fuse);
       if (!item2Emoji) {
@@ -42,7 +45,7 @@ function craft(item1, item2) {
           newCreation = data.choices[0].message.content.trim();
         }
 
-        addToInventory(newCreation + ' ' + item2Emoji);
+        addToInventory(newCreation + ' ' + unicodeToEmoji(item2Emoji));
       })
       .catch(error => console.error("Error:", error));
     })
