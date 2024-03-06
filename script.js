@@ -9,12 +9,13 @@ function craft(item1, item2) {
       });
 
         // Initialize Fuse.js instance with emoji data
-      const fuse = new Fuse(emojis, { keys: ["name"], threshold: 0.4 });
+      const fuse = new Fuse(emojis, { keys: ["name"], threshold: 1 });
       function unicodeToEmoji(unicode) {
         return String.fromCodePoint(parseInt(unicode, 16));
       }
 
       const item2Emoji = fuzzySearchEmoji(item2, fuse);
+      console.log(item2Emoji);
       if (!item2Emoji) {
         console.log("Emoji not found for:", item2);
         return;
@@ -55,6 +56,7 @@ function craft(item1, item2) {
     // Function to perform fuzzy search for emoji
 function fuzzySearchEmoji(text, fuse) {
     const result = fuse.search(text);
+    console.log(result)
     return result.length > 0 ? result[0].item.char : null;
 }
 function filterInventory() {
