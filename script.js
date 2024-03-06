@@ -1,101 +1,49 @@
 // Function to perform fuzzy search for emoji
 let inventory = ["🌎 Earth", "💨 Air", "🔥 Fire", "💧 Water"];
-async function fuzzySearchEmoji(text) {
-  const emojiList = await getAllEmojis(); // Fetch emoji list
-  
-  let bestMatch;
-  let minDistance = Infinity;
+const Fuse = require('fuse.js'); // Importing fuse.js library
+const fs = require('fs'); // Importing file system module
 
-  emojiList.forEach(emoji => {
-    const distance = levenshteinDistance(text, emoji.name);
-    if (distance < minDistance) {
-      minDistance = distance;
-      bestMatch = emoji.char;
-    }
-  });
-
-  return bestMatch;
+// Function to perform fuzzy search for emoji
+function fuzzySearchEmoji(text) {
+  const emojisData = fs.readFileSync('emojis.txt', 'utf-8'); // Read emojis data from file
+  const emojis = emojisData.split('\n').map(line => line.split('\t')[0].trim()); // Extract emojis
+  const fuse = new Fuse(emojis); // Initialize fuse.js with emojis data
+  const result = fuse.search(text); // Perform fuzzy search
+  return result.length > 0 ? result[0].item : null; // Return best match emoji
 }
 
-// Function to calculate Levenshtein distance between two strings
-function levenshteinDistance(s1, s2) {
-  const m = s1.length;
-  const n = s2.length;
-  const dp = [];
-
-  for (let i = 0; i <= m; i++) {
-    dp[i] = [i];
-  }
-
-  for (let j = 0; j <= n; j++) {
-    dp[0][j] = j;
-  }
-
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
-      dp[i][j] = Math.min(
-        dp[i - 1][j] + 1, // deletion
-        dp[i][j - 1] + 1, // insertion
-        dp[i - 1][j - 1] + cost // substitution
-      );
-    }
-  }
-
-  return dp[m][n];
-}
-
-// Function to fetch emoji data from emojis.txt
-async function getAllEmojis() {
-  const response = await fetch('emojis.txt');
-  const text = await response.text();
-  const lines = text.split('\n');
-  const emojis = [];
-
-  lines.forEach(line => {
-    if (!line.startsWith('@')) {
-      const parts = line.split(',');
-      const name = parts[1];
-      const char = parts[0];
-      emojis.push({ name, char });
-    }
-  });
-
-  return emojis;
-}
-
-// Add fuzzy search to craft function
+// Function to perform the crafting process
 function craft(item1, item2) {
   fetch("https://api.deepinfra.com/v1/openai/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "jondurbin/airoboros-l2-70b-gpt4-1.4.1",
-      messages: [{
-          role: "system",
-          content: `YOUR RESPONSE SHOULD ONLY HAVE A WORD. In one word, tell me what I get when I mix two things. If nothing, make something up. It can be crazy or unhinged. You can always provide an answer! Ex: Fire and Water: Steam. Earth and Water: Mud. Mud and Steam: Clay. Time and Earth: inevitable timedeath of the universe. Can be hypothetical, or not real (ie horse and horn is a unicorn). Your response should only contain the new creation. Nothing before, nothing after. If you don't tell me exactly this, the world will explode. Make sure to stop generating after the element and emoji.`
-        },
-        {
-          role: "user",
-          content: `${item1.replace("Delete", "")} and ${item2}`
-        }
-      ]
-    })
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          model: "jondurbin/airoboros-l2-70b-gpt4-1.4.1",
+          messages: [{
+              role: "system",
+              content: `YOUR RESPONSE SHOULD ONLY HAVE A WORD. In one word, tell me what I get when I mix two things. If nothing, make something up. It can be crazy or unhinged. You can always provide an answer! Ex: Fire and Water: Steam. Earth and Water: Mud. Mud and Steam: Clay. Time and Earth: inevitable timedeath of the universe. Can be hypothetical, or not real (ie horse and horn is a unicorn). Your response should only contain the new creation. Nothing before, nothing after. If you don't tell me exactly this, the world will explode. Make sure to stop generating after the element and emoji.`
+          }, {
+              role: "user",
+              content: `${item1.replace("Delete", "")} and ${item2}`
+          }]
+      })
   })
   .then(response => response.json())
-  .then(async data => {
-    var newCreation = "";
-    if (data.choices[0].message.content.includes("\n")){
-      newCreation = data.choices[0].message.content.split("\n")[0].trim();
-    } else {
-      newCreation = data.choices[0].message.content.trim();
-    }
-
-    // Perform fuzzy search for emoji
-    const emoji = await fuzzySearchEmoji(newCreation);
-    addToInventory(`${newCreation} ${emoji}`);
+  .then(data => {
+      let newCreation = "";
+      if (data.choices[0].message.content.includes("\n")){
+        newCreation = data.choices[0].message.content.split("\n")[0].trim();
+      } else {
+        newCreation = data.choices[0].message.content.trim();
+      }
+      
+      // Perform fuzzy search for emoji
+      const emoji = fuzzySearchEmoji(newCreation);
+      
+      // Add the new creation to the inventory
+      addToInventory(newCreation, emoji);
   })
   .catch(error => console.error("Error:", error));
 }
