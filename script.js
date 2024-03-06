@@ -4,7 +4,7 @@ function craft(item1, item2) {
     .then(response => response.text())
     .then(text => {
         const emojis = text.split('\n').map(line => {
-        const parts = line.split('\t');
+        const parts = line.split(',');
         return { name: parts[1].trim(), char: parts[0].trim() };
       });
 
