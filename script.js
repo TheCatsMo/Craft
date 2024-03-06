@@ -54,7 +54,7 @@ async function getAllEmojis() {
 
   lines.forEach(line => {
     if (!line.startsWith('@')) {
-      const parts = line.split('\t');
+      const parts = line.split(',');
       const name = parts[1].trim();
       const char = parts[0].trim();
       emojis.push({ name, char });
