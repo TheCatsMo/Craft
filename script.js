@@ -1,4 +1,71 @@
-let inventory = ["Earth", "Air", "Fire", "Water"];
+let inventory = ["🌎 Earth", "💨 Air", "🔥 Fire", "💧 Water"];
+
+// Function to perform fuzzy search for emoji
+async function fuzzySearchEmoji(text) {
+  const emojiList = await getAllEmojis(); // Fetch emoji list
+  
+  let bestMatch;
+  let minDistance = Infinity;
+
+  emojiList.forEach(emoji => {
+    const distance = levenshteinDistance(text, emoji.name);
+    if (distance < minDistance) {
+      minDistance = distance;
+      bestMatch = emoji.char;
+    }
+  });
+
+  return bestMatch;
+}
+
+// Function to calculate Levenshtein distance between two strings
+function levenshteinDistance(s1, s2) {
+  const m = s1.length;
+  const n = s2.length;
+  const dp = [];
+
+  for (let i = 0; i <= m; i++) {
+    dp[i] = [i];
+  }
+
+  for (let j = 0; j <= n; j++) {
+    dp[0][j] = j;
+  }
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1, // deletion
+        dp[i][j - 1] + 1, // insertion
+        dp[i - 1][j - 1] + cost // substitution
+      );
+    }
+  }
+
+  return dp[m][n];
+}
+
+// Function to fetch emoji data
+async function getAllEmojis() {
+  const url = 'https://unicode.org/emoji/charts/full-emoji-list.txt';
+  const response = await fetch(url);
+  const text = await response.text();
+  const lines = text.split('\n');
+  const emojis = [];
+
+  lines.forEach(line => {
+    if (!line.startsWith('@')) {
+      const parts = line.split('\t');
+      const name = parts[1].trim();
+      const char = parts[0].trim();
+      emojis.push({ name, char });
+    }
+  });
+
+  return emojis;
+}
+
 function craft(item1, item2) {
     fetch("https://api.deepinfra.com/v1/openai/chat/completions", {
         method: "POST",
@@ -17,13 +84,19 @@ function craft(item1, item2) {
         })
     })
     .then(response => response.json())
-    .then(data => {
+    .then(async data => {
         var newCreation = "";
         if (data.choices[0].message.content.includes("\n")){
           newCreation = data.choices[0].message.content.split("\n")[0].trim();
         } else {
           newCreation = data.choices[0].message.content.trim();
         }
+        
+        // Use fuzzy search to find emoji for the new creation
+        const emoji = await fuzzySearchEmoji(newCreation);
+        
+        // Use the found emoji as the new creation
+        newCreation += " " + emoji;
         
         addToInventory(newCreation);
     })
