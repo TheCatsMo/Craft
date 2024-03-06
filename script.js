@@ -5,7 +5,7 @@ function craft(item1, item2) {
     .then(text => {
         const emojis = text.split('\n').map(line => {
         const parts = line.split(',');
-        return { name: parts[1].trim(), char: parts[0].trim() };
+        return {name: parts[1], char: parts[0]};
       });
 
         // Initialize Fuse.js instance with emoji data
